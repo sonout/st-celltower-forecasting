@@ -1,0 +1,40 @@
+# Ignore folders
+# Only documented synthetic fixtures are public; all other data stays private.
+data/*
+!data/README.md
+!data/sample/
+gwn_data/
+results/
+condor/
+
+# Local scheduler submissions
+*.sub
+
+# Standard Python ignores
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+**/.DS_Store
+
+# Ignore virtual environment
+venv/
+.venv/
+.env/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.local/
+configs/*.local.yaml
+*.pt
+*.pth
+*.ckpt
+*.pem
+*.key

@@ -1,0 +1,17 @@
+name: ARIMA
+enabled: true
+type: "baseline"
+description: "Per-cell ARIMA trained on history and conditioned on each forecast input window"
+
+model_params:
+  # ARIMA order parameters
+  p: 2              # Autoregressive order - higher for telecom patterns
+  d: 1              # Differencing order - auto-determined if null
+  q: 1              # Moving average order
+  
+  # Seasonal ARIMA parameters
+  seasonal: true    # Enable seasonal component for daily patterns
+  seasonal_order: [1, 1, 1, 96]  # (P, D, Q, s) where s=96 (24h in 15-min intervals)
+  
+  # Note: Each cell-KPI gets its own ARIMA model
+  # Full seasonal fits can be expensive; test on a subset first.

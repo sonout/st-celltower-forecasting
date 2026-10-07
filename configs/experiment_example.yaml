@@ -1,0 +1,40 @@
+# Private-data experiment template. All paths are relative to the project root.
+data:
+  data_dir: data/raw
+  output_dir: data/processed
+  granularity_min: 15
+  input_steps: 48
+  output_steps: 12
+  train_ratio: 0.7
+  val_ratio: 0.1
+  essential_columns: [eventdate, CELL_]
+  kpi_columns: [MAX_DL_ACTIVE_UE, DL_USER_THPUT_KBPS, PERC_USE_PRBS_DL]
+  add_timefeats: true
+  cyclic_timefeats: true
+  lag_hours: []
+  rolling_avg_hours: null
+
+data_split:
+  train_start: "2025-01-01"
+  train_end: "2025-02-01"
+  val_start: "2025-02-01"
+  val_end: "2025-02-08"
+  test_start: "2025-02-08"
+  test_end: "2025-02-15"
+
+target_kpis: [MAX_DL_ACTIVE_UE, DL_USER_THPUT_KBPS]
+horizons: {1h: 4, 2h: 8, 3h: 12}
+
+experiment:
+  name: celltower_forecasting
+  models: [graph_wavenet]
+  output_dir: results
+  store_predictions: true
+  store_predictions_folder: results/predictions
+  save_model_checkpoints: false
+  random_seed: 42
+  device: auto
+  cpu_threads: 4
+
+evaluation:
+  metrics: [mae, rmse, mape]

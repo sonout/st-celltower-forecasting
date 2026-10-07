@@ -1,0 +1,10 @@
+name: random_forest
+enabled: true
+type: "baseline"
+description: "Direct multi-output Random Forest forecasts from input windows and static features"
+model_params:
+  n_estimators: 50
+  max_depth: 10
+  min_samples_split: 20
+  min_samples_leaf: 10
+  random_state: 42

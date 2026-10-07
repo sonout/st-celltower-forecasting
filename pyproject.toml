@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "st-celltower-forecasting"
+version = "0.1.0"
+description = "Spatio-temporal telecom KPI forecasting using handover graphs"
+readme = "README.md"
+requires-python = ">=3.9,<3.12"
+license = {file = "LICENSE"}
+dynamic = ["dependencies"]
+
+[project.optional-dependencies]
+notebooks = ["matplotlib==3.8.3", "seaborn==0.13.2", "pyarrow==16.1.0", "ipykernel==6.29.3"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+include = ["src*", "models*"]
+
+[tool.setuptools]
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "third_party/licenses/*.txt"]

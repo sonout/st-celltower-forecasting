@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 450" role="img" aria-labelledby="title description">
+  <title id="title">Spatio-temporal telecom KPI forecasting architecture</title>
+  <desc id="description">KPI sequences and training-period handover counts feed Graph WaveNet; classical baselines use past KPI observations. Forecasts are evaluated at one, two, and three hours.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#64748b"/></marker>
+  </defs>
+  <rect width="1080" height="450" rx="20" fill="#f8fafc"/>
+  <g font-family="Arial,sans-serif" fill="#0f172a">
+    <text x="40" y="44" font-size="24" font-weight="bold">From network observations to multi-horizon forecasts</text>
+    <text x="40" y="70" font-size="14" fill="#475569">15-minute observations · cell-level graph · chronological evaluation</text>
+    <rect x="40" y="110" width="220" height="112" rx="12" fill="#dbeafe"/>
+    <text x="60" y="142" font-size="17" font-weight="bold">Telecom KPI time series</text>
+    <text x="60" y="172" font-size="14">48 past steps / 12 hours</text>
+    <text x="60" y="196" font-size="14">Multiple inputs and targets</text>
+    <rect x="40" y="260" width="220" height="118" rx="12" fill="#e0e7ff"/>
+    <text x="60" y="292" font-size="17" font-weight="bold">Observed handovers</text>
+    <text x="60" y="321" font-size="14">Training-period counts only</text>
+    <text x="60" y="346" font-size="14">Weighted directed cell graph</text>
+    <rect x="320" y="110" width="220" height="112" rx="12" fill="#e2e8f0"/>
+    <text x="340" y="143" font-size="17" font-weight="bold">Prepare sequences</text>
+    <text x="340" y="174" font-size="14">Causal filling, time features</text>
+    <text x="340" y="198" font-size="14">Disjoint forecast targets</text>
+    <rect x="600" y="110" width="210" height="112" rx="12" fill="#ccfbf1"/>
+    <text x="620" y="143" font-size="17" font-weight="bold">Graph WaveNet</text>
+    <text x="620" y="172" font-size="14">Dilated temporal convolutions</text>
+    <text x="620" y="196" font-size="14">Observed + learned adjacency</text>
+    <rect x="600" y="270" width="210" height="108" rx="12" fill="#fef3c7"/>
+    <text x="620" y="301" font-size="17" font-weight="bold">Classical baselines</text>
+    <text x="620" y="329" font-size="14">ARIMA · XGBoost · forests</text>
+    <text x="620" y="353" font-size="14">Seasonal naive · averages</text>
+    <rect x="870" y="178" width="175" height="142" rx="12" fill="#dbeafe"/>
+    <text x="890" y="211" font-size="17" font-weight="bold">Forecast metrics</text>
+    <text x="890" y="242" font-size="14">1h / 2h / 3h ahead</text>
+    <text x="890" y="268" font-size="14">MAE · RMSE · MAPE</text>
+    <text x="890" y="295" font-size="14">Dataset fingerprints</text>
+  </g>
+  <g fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M260 165 H320"/><path d="M540 165 H600"/>
+    <path d="M260 320 H565 V203 H600"/>
+    <path d="M430 222 V324 H600"/>
+    <path d="M810 164 H841 V215 H870"/>
+    <path d="M810 324 H841 V283 H870"/>
+  </g>
+  <text x="40" y="417" font-family="Arial,sans-serif" font-size="14" fill="#475569">Public demo uses twelve fictional cells. Real telecom data and historical experiments remain private.</text>
+</svg>

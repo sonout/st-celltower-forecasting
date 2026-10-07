@@ -1,0 +1,20 @@
+name: XGBoost
+enabled: true
+type: "baseline"
+description: "Direct XGBoost forecast per horizon and target from input windows and static features"
+
+model_params:
+  # Core XGBoost parameters
+  n_estimators: 200          # More trees for better performance
+  max_depth: 8               # Deeper trees for complex patterns
+  learning_rate: 0.05        # Lower rate for better generalization
+  
+  # Regularization
+  subsample: 0.8             # Row sampling ratio
+  colsample_bytree: 0.8      # Column sampling ratio
+  
+  # Training control
+  early_stopping_rounds: 20  # Stop if no improvement
+  random_state: 42
+  
+  # Input features are prepared centrally using configs/experiment.yaml.

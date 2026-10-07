@@ -1,0 +1,6 @@
+name: seasonal_naive
+enabled: true
+type: "baseline"
+description: "Repeat the last observed day, with persistence when history is unavailable"
+model_params:
+  seasonal_period: 96

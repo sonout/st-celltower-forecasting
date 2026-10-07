@@ -1,0 +1,394 @@
+{
+  "synthetic": true,
+  "purpose": "Execution demonstration only; not a benchmark on real telecom data.",
+  "command": "python main.py --demo --models historical_average seasonal_naive random_forest xgboost arima graph_wavenet --epochs 20",
+  "source": {
+    "synthetic": true,
+    "parameters": {
+      "n_cells": 12,
+      "days": 6,
+      "seed": 42,
+      "generator_version": 1
+    },
+    "sha256": {
+      "CELL_synthetic.csv": "3834a9824dfdc625253293c95725f951b62647c39c0020b0d93c579a74c65749",
+      "HO_synthetic.csv": "eb99f64a0ab34a2de5f9ec46dcbb250d6d25be1506e69ec79feee03bb38adcba"
+    }
+  },
+  "run_id": "20261007_154154-d5acb3d3",
+  "seed": 42,
+  "horizons": {
+    "1h": 4,
+    "2h": 8,
+    "3h": 12
+  },
+  "evaluation": "Exact forecast steps, aggregated across test origins and cells; MAPE excludes zero targets.",
+  "dataset": {
+    "granularity_min": 15,
+    "input_steps": 48,
+    "output_steps": 12,
+    "n_cells": 12,
+    "n_features": 8,
+    "n_targets": 2,
+    "feature_columns": [
+      "MAX_DL_ACTIVE_UE",
+      "DL_USER_THPUT_KBPS",
+      "PERC_USE_PRBS_DL",
+      "hour_sin",
+      "hour_cos",
+      "day_of_week_sin",
+      "day_of_week_cos",
+      "is_weekend"
+    ],
+    "target_columns": [
+      "MAX_DL_ACTIVE_UE",
+      "DL_USER_THPUT_KBPS"
+    ],
+    "data_split": {
+      "test_end": "2025-01-07",
+      "test_start": "2025-01-06",
+      "train_end": "2025-01-05",
+      "train_start": "2025-01-01",
+      "val_end": "2025-01-06",
+      "val_start": "2025-01-05"
+    },
+    "train_sequences": 325,
+    "val_sequences": 85,
+    "test_sequences": 85,
+    "imputation": "causal_forward_fill",
+    "split_strategy": "target_dates"
+  },
+  "dataset_sha256": {
+    "X_test.npy": "f9acde5b071bd1fc69c3c0ec776adf99a221edbfba5225b36e551cfcd0773ebb",
+    "X_train.npy": "4b569b454e9262f132e4353c4fa4ec662903013aa0adf14992e6b9ef3a9a91b4",
+    "X_val.npy": "1e3f949838a9c6b6bc091c054e589e228654142902227dcac3bad82dc302b09c",
+    "Y_test.npy": "35bb1621d92e47565c8665d0adaa5536a8cc20da4a70b318ffe9092996975231",
+    "Y_train.npy": "01c7155a832ab61485e25f5faf2ee5cde8a6e811d4a45b3d3011a5782f469701",
+    "Y_val.npy": "f8b4fbf07e6689bd257442c1f7de67c183adb70d165bf419783320209e10f95c",
+    "metadata.yaml": "b16ad812eb72cfe80d9e8242f11e99fe5b3e66a51f158a40abcfd0f7c009e71c",
+    "static_features.npy": "489256c0ea540ac04624dd2357f3a10266fb37aa3bef6a6503776e0c3cad1b2a",
+    "timestamps_test.pkl": "2a289cb259af6cd0be4065bd96b21f7b3dfccc4e240a0302db703b92c5900aea",
+    "timestamps_train.pkl": "a0f43438f517669b16a7262e7a8295e46b1e312eddb8e8302669a23d244e354a",
+    "timestamps_val.pkl": "3e63d9dda039008a0d1b65af9f8adb48b346a19e6ebd67cf3723e1ac796474b1"
+  },
+  "model_configs": {
+    "historical_average": {
+      "name": "historical_average",
+      "device": "cpu",
+      "input_steps": 48,
+      "output_steps": 12,
+      "random_seed": 42
+    },
+    "seasonal_naive": {
+      "name": "seasonal_naive",
+      "model_params": {
+        "seasonal_period": 96
+      },
+      "device": "cpu",
+      "input_steps": 48,
+      "output_steps": 12,
+      "random_seed": 42
+    },
+    "random_forest": {
+      "name": "random_forest",
+      "model_params": {
+        "n_estimators": 20,
+        "max_depth": 8,
+        "random_state": 42,
+        "n_jobs": 1
+      },
+      "device": "cpu",
+      "input_steps": 48,
+      "output_steps": 12,
+      "random_seed": 42
+    },
+    "xgboost": {
+      "name": "XGBoost",
+      "model_params": {
+        "n_estimators": 30,
+        "max_depth": 3,
+        "learning_rate": 0.1,
+        "random_state": 42,
+        "n_jobs": 1,
+        "early_stopping_rounds": 5
+      },
+      "device": "cpu",
+      "input_steps": 48,
+      "output_steps": 12,
+      "random_seed": 42
+    },
+    "arima": {
+      "name": "ARIMA",
+      "model_params": {
+        "p": 1,
+        "d": 0,
+        "q": 0,
+        "seasonal": false
+      },
+      "device": "cpu",
+      "input_steps": 48,
+      "output_steps": 12,
+      "random_seed": 42
+    },
+    "graph_wavenet": {
+      "name": "graph_wavenet",
+      "dropout": 0.1,
+      "blocks": 2,
+      "layers": 2,
+      "gcn_bool": true,
+      "addaptadj": true,
+      "adjtype": "doubletransition",
+      "randomadj": false,
+      "aptonly": false,
+      "kernel_size": 2,
+      "apt_layer": true,
+      "weight_alpha": 0,
+      "residual_channels": 8,
+      "dilation_channels": 8,
+      "skip_channels": 16,
+      "end_channels": 32,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "epochs": 20,
+      "batch_size": 32,
+      "patience": 10,
+      "num_workers": 0,
+      "device": "cpu",
+      "input_steps": 48,
+      "output_steps": 12,
+      "random_seed": 42,
+      "graph_sha256": "dff2815964914c0ccf2cfbe4480224913e8963a87c8220e68415366888557105"
+    }
+  },
+  "metrics": {
+    "historical_average": {
+      "MAX_DL_ACTIVE_UE": {
+        "1h": {
+          "mae": 4.367690086364746,
+          "rmse": 4.893121242523193,
+          "mape": 26.02267861366272
+        },
+        "2h": {
+          "mae": 4.5348286628723145,
+          "rmse": 5.012442588806152,
+          "mape": 27.516335248947144
+        },
+        "3h": {
+          "mae": 4.636094093322754,
+          "rmse": 5.0749711990356445,
+          "mape": 28.415796160697937
+        }
+      },
+      "DL_USER_THPUT_KBPS": {
+        "1h": {
+          "mae": 1525.8548583984375,
+          "rmse": 1832.599853515625,
+          "mape": 5.153638124465942
+        },
+        "2h": {
+          "mae": 1540.576904296875,
+          "rmse": 1836.8245849609375,
+          "mape": 5.200222134590149
+        },
+        "3h": {
+          "mae": 1562.951416015625,
+          "rmse": 1850.845947265625,
+          "mape": 5.268704891204834
+        }
+      }
+    },
+    "seasonal_naive": {
+      "MAX_DL_ACTIVE_UE": {
+        "1h": {
+          "mae": 0.7534451484680176,
+          "rmse": 0.9429454207420349,
+          "mape": 4.406673833727837
+        },
+        "2h": {
+          "mae": 0.7523254156112671,
+          "rmse": 0.9414106607437134,
+          "mape": 4.458795487880707
+        },
+        "3h": {
+          "mae": 0.7544421553611755,
+          "rmse": 0.9433125257492065,
+          "mape": 4.528588056564331
+        }
+      },
+      "DL_USER_THPUT_KBPS": {
+        "1h": {
+          "mae": 700.6680297851562,
+          "rmse": 878.1311645507812,
+          "mape": 2.3442957550287247
+        },
+        "2h": {
+          "mae": 698.2994384765625,
+          "rmse": 875.9363403320312,
+          "mape": 2.3355405777692795
+        },
+        "3h": {
+          "mae": 703.160888671875,
+          "rmse": 883.62646484375,
+          "mape": 2.350221201777458
+        }
+      }
+    },
+    "random_forest": {
+      "MAX_DL_ACTIVE_UE": {
+        "1h": {
+          "mae": 0.640409439024051,
+          "rmse": 0.7926193594347626,
+          "mape": 3.703715216534443
+        },
+        "2h": {
+          "mae": 0.6462720186021955,
+          "rmse": 0.8124928268975998,
+          "mape": 3.7424338195807323
+        },
+        "3h": {
+          "mae": 0.661762250895217,
+          "rmse": 0.8533899721222603,
+          "mape": 3.8386580752838504
+        }
+      },
+      "DL_USER_THPUT_KBPS": {
+        "1h": {
+          "mae": 511.97472419633607,
+          "rmse": 638.3079882539395,
+          "mape": 1.7139759175395928
+        },
+        "2h": {
+          "mae": 500.0903578837713,
+          "rmse": 628.7723613199527,
+          "mape": 1.676992622719339
+        },
+        "3h": {
+          "mae": 509.29777798633575,
+          "rmse": 636.1876589158055,
+          "mape": 1.7086678357864264
+        }
+      }
+    },
+    "xgboost": {
+      "MAX_DL_ACTIVE_UE": {
+        "1h": {
+          "mae": 0.5901867151260376,
+          "rmse": 0.7331856489181519,
+          "mape": 3.4343186765909195
+        },
+        "2h": {
+          "mae": 0.592978298664093,
+          "rmse": 0.7381862998008728,
+          "mape": 3.49898524582386
+        },
+        "3h": {
+          "mae": 0.5960273146629333,
+          "rmse": 0.7407147884368896,
+          "mape": 3.5556480288505554
+        }
+      },
+      "DL_USER_THPUT_KBPS": {
+        "1h": {
+          "mae": 515.803466796875,
+          "rmse": 648.2020263671875,
+          "mape": 1.7288995906710625
+        },
+        "2h": {
+          "mae": 507.50445556640625,
+          "rmse": 637.355712890625,
+          "mape": 1.702955737709999
+        },
+        "3h": {
+          "mae": 512.257568359375,
+          "rmse": 641.6923828125,
+          "mape": 1.718534342944622
+        }
+      }
+    },
+    "arima": {
+      "MAX_DL_ACTIVE_UE": {
+        "1h": {
+          "mae": 1.3244298696517944,
+          "rmse": 1.5620090961456299,
+          "mape": 7.699954509735107
+        },
+        "2h": {
+          "mae": 2.284327507019043,
+          "rmse": 2.5943658351898193,
+          "mape": 13.407699763774872
+        },
+        "3h": {
+          "mae": 3.1836867332458496,
+          "rmse": 3.5894739627838135,
+          "mape": 18.97176057100296
+        }
+      },
+      "DL_USER_THPUT_KBPS": {
+        "1h": {
+          "mae": 798.6765747070312,
+          "rmse": 994.896484375,
+          "mape": 2.6824895292520523
+        },
+        "2h": {
+          "mae": 1097.2464599609375,
+          "rmse": 1319.468017578125,
+          "mape": 3.685065731406212
+        },
+        "3h": {
+          "mae": 1334.3380126953125,
+          "rmse": 1574.1396484375,
+          "mape": 4.478937387466431
+        }
+      }
+    },
+    "graph_wavenet": {
+      "MAX_DL_ACTIVE_UE": {
+        "1h": {
+          "mae": 1.4418410062789917,
+          "rmse": 1.74500572681427,
+          "mape": 7.33601301908493
+        },
+        "2h": {
+          "mae": 1.4584639072418213,
+          "rmse": 1.7840194702148438,
+          "mape": 7.611305266618729
+        },
+        "3h": {
+          "mae": 1.2499079704284668,
+          "rmse": 1.532230019569397,
+          "mape": 6.7117951810359955
+        }
+      },
+      "DL_USER_THPUT_KBPS": {
+        "1h": {
+          "mae": 695.994384765625,
+          "rmse": 865.3348999023438,
+          "mape": 2.3761585354804993
+        },
+        "2h": {
+          "mae": 703.674560546875,
+          "rmse": 872.49365234375,
+          "mape": 2.3986222222447395
+        },
+        "3h": {
+          "mae": 749.2284545898438,
+          "rmse": 934.3958129882812,
+          "mape": 2.562694251537323
+        }
+      }
+    }
+  },
+  "result_file_sha256": "c5705eee7e9b060de19e7cda83ffe63d0a7972c94825709247e38db4ad4a45bb",
+  "runtime_source": "report export environment; original run did not record versions",
+  "runtime": {
+    "python": "3.9.15",
+    "torch": "2.0.1+cu118",
+    "numpy": "1.26.4",
+    "pandas": "2.2.1",
+    "scipy": "1.12.0",
+    "scikit-learn": "1.4.1.post1",
+    "statsmodels": "0.14.5",
+    "xgboost": "2.1.4",
+    "networkx": "3.2.1"
+  }
+}

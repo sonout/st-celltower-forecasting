@@ -1,0 +1,12 @@
+# Direct runtime dependencies matching the existing working mar environment.
+numpy==1.26.4
+pandas==2.2.1
+PyYAML==6.0.1
+torch==2.0.1
+scipy==1.12.0
+scikit-learn==1.4.1.post1
+statsmodels==0.14.5
+xgboost==2.1.4
+networkx==3.2.1
+typing_extensions==4.10.0
+tqdm==4.66.2

@@ -1,0 +1,24 @@
+name: graph_wavenet
+description: Graph WaveNet with observed handover and learned adaptive adjacency
+dropout: 0.3
+blocks: 4
+layers: 2
+gcn_bool: true
+addaptadj: true
+adjtype: doubletransition
+randomadj: false
+aptonly: false
+kernel_size: 2
+apt_layer: true
+weight_alpha: 0
+residual_channels: 32
+dilation_channels: 32
+skip_channels: 256
+end_channels: 512
+learning_rate: 0.001
+weight_decay: 0.0001
+epochs: 100
+batch_size: 32
+patience: 10
+num_workers: 0
+graph_path: data/processed/handover_graph.pkl

@@ -1,0 +1,4 @@
+name: historical_average
+enabled: true
+type: "baseline"
+description: "Historical pattern baseline (cell-hour-weekday averages)"

@@ -1,0 +1,55 @@
+# Six days of entirely synthetic data for twelve fictional network cells.
+data:
+  data_dir: data/demo/raw
+  output_dir: data/demo/processed
+  granularity_min: 15
+  input_steps: 48
+  output_steps: 12
+  essential_columns: [eventdate, CELL_]
+  kpi_columns: [MAX_DL_ACTIVE_UE, DL_USER_THPUT_KBPS, PERC_USE_PRBS_DL]
+  add_timefeats: true
+  cyclic_timefeats: true
+  lag_hours: []
+  rolling_avg_hours: null
+
+data_split:
+  train_start: "2025-01-01"
+  train_end: "2025-01-05"
+  val_start: "2025-01-05"
+  val_end: "2025-01-06"
+  test_start: "2025-01-06"
+  test_end: "2025-01-07"
+
+target_kpis: [MAX_DL_ACTIVE_UE, DL_USER_THPUT_KBPS]
+horizons: {1h: 4, 2h: 8, 3h: 12}
+
+experiment:
+  name: synthetic_demo
+  models: [graph_wavenet]
+  output_dir: results/demo
+  store_predictions: true
+  store_predictions_folder: results/demo/predictions
+  save_model_checkpoints: false
+  random_seed: 42
+  device: cpu
+  cpu_threads: 4
+  model_overrides:
+    graph_wavenet:
+      graph_path: data/demo/handover_graph.pkl
+      epochs: 5
+      batch_size: 32
+      blocks: 2
+      residual_channels: 8
+      dilation_channels: 8
+      skip_channels: 16
+      end_channels: 32
+      dropout: 0.1
+    random_forest:
+      model_params: {n_estimators: 20, max_depth: 8, random_state: 42, n_jobs: 1}
+    xgboost:
+      model_params: {n_estimators: 30, max_depth: 3, learning_rate: 0.1, random_state: 42, n_jobs: 1, early_stopping_rounds: 5}
+    arima:
+      model_params: {p: 1, d: 0, q: 0, seasonal: false}
+
+evaluation:
+  metrics: [mae, rmse, mape]
