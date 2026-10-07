@@ -1,4 +1,4 @@
-# st-celltower-forecasting
+# Spatio Temporal Celltower Forecasting
 
 Spatio-temporal forecasting framework for telecommunications network KPIs. Network cells are represented as a graph derived from observed handover relationships, enabling Graph WaveNet to model temporal and spatial dependencies jointly, with classical forecasting methods as comparison baselines.
 
@@ -9,7 +9,7 @@ benchmark results are not distributed.
 
 ![Forecasting architecture](assets/architecture.svg)
 
-## Quick start: no private data required
+## Quick start
 
 Use Python 3.9–3.11. From the repository root:
 
@@ -154,76 +154,9 @@ A sample-limited run checks execution, not full-dataset accuracy. ARIMA seasonal
 fits and full tree runs can be expensive. The default `python main.py` uses the
 private-data example config; use `--demo` for an immediately runnable public example.
 
-## Reproducibility and analysis
 
-Date partitions are start-inclusive/end-exclusive. Every target in a window must
-fit inside its partition; boundary-crossing windows are dropped. Input history
-can precede the partition, as in an operational forecast. Without date boundaries,
-ratio splits purge overlapping forecast targets. Missing values are forward-filled
-from past observations only, and initial gaps become zero. Metrics currently
-include imputed targets; a missing-target evaluation mask is a future improvement.
-
-Preprocessing creates immutable, uniquely named dataset folders with SHA-256
-manifests. Prediction archives snapshot metadata and their original dataset hashes;
-analysis rejects altered datasets and unverifiable legacy predictions. Keep the
-original generated dataset beside saved predictions. Seeds apply to Python,
-NumPy, and PyTorch; exact cross-platform reproducibility is not guaranteed.
-
-Ordinary MSE is the default (`weight_alpha: 0`). Optional weighting uses fixed
-training-only, per-target normalization statistics. Validation is deterministic
-and aggregates weighted error independently of batch grouping; early stopping
-restores an independent best-epoch snapshot.
-
-Set `experiment.save_model_checkpoints: true` to save checkpoints. Graph WaveNet
-checkpoints include scalers, adjacency, and weighting statistics and can be loaded
-on CPU without the original graph file:
-
-```python
-from pathlib import Path
-from models.graph_wavenet import GraphWaveNetModel
-
-model = GraphWaveNetModel.load(Path("results/checkpoints/example.pt"), device="cpu")
-```
-
-For output-free notebooks, install `requirements-notebooks.txt` and select the
-same Python environment. [03_results_analysis.ipynb](notebooks/03_results_analysis.ipynb)
-loads the latest demo Graph WaveNet predictions and verifies their dataset.
-
-## Project layout
-
-```text
-configs/         Private-data template, runnable demo, six model configs
-models/          Graph WaveNet, common interface, sequence baselines
-src/             Graph/data preparation, immutable datasets, experiment pipeline
-notebooks/       Graph construction, data exploration, verified result analysis
-tests/           Regression tests with fictional data
-data/            Data contract and tiny hand-written synthetic schema fixtures
-assets/          Architecture, synthetic forecast, verified synthetic metrics
-scripts/         Public-file/history audit, clean export, verified report export
-third_party/     Retained upstream licenses
-.github/         Unit-test and one-epoch synthetic-demo CI
-```
-
-Run checks with:
-
-```bash
-python -m unittest discover -s tests -v
-python scripts/audit_public.py
-git diff --check
-```
-
-CI is configured for Python 3.10 and 3.11; its hosted runs start after a push.
-Local checks cover loss edge cases, early stopping, checkpoint round trips,
-causal preprocessing, split boundaries, baseline contracts, artifact provenance,
-synthetic generation, and directed graph aggregation.
 
 ## Public release and license
-
-Before publishing, read [docs/PUBLIC_RELEASE.md](docs/PUBLIC_RELEASE.md).
-The research repository's **old Git history still contains private paths, cell
-identifiers, and cached notebook outputs**. Cleaning current files does not remove
-that history. Create a reviewed source export and a **new** public repository;
-do not simply change the research remote's visibility.
 
 Original project components use [MIT](LICENSE). The adapted Graph WaveNet module
 retains Apache-2.0 and original Graph WaveNet MIT notices as described in
